@@ -1,1 +1,1 @@
-# ngmex
+# ngmex - Angular musical express.js
