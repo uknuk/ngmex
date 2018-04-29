@@ -8,7 +8,6 @@ const express = require('express'),
 
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/api', api);
-
 app.get('/media', function(req,res){
   var filePath = req.query.path,
       file = path.join(__dirname, "media", filePath);
