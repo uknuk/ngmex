@@ -23,7 +23,7 @@ router.get('/artists', (req, res) => {
 router.get('/artists/:path/:artist', (req, res) => {
   const artPath = path.join(req.params.path, req.params.artist),
     dir = path.join(media, artPath);
-  
+
   var tracks = {}
 
   fs.readdirSync(dir).forEach((alb) => {

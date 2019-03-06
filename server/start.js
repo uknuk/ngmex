@@ -2,15 +2,15 @@ const express = require('express'),
       path = require('path'),
       http = require('http'),
       fs = require('fs'),
-      api = require('./server/api'),
-      port = process.env.PORT || '3000',
+      api = require('./api'),
+      port = process.env.PORT || '1926',
       app = express();
 
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, '../dist')));
 app.use('/api', api);
 app.get('/media', function(req,res){
   var filePath = req.query.path,
-      file = path.join(__dirname, "media", filePath);
+      file = path.join(__dirname, "../media", filePath);
 
   fs.exists(file, function(exists){
     if(exists)
@@ -28,7 +28,7 @@ app.get('/media', function(req,res){
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 app.set('port', port);
