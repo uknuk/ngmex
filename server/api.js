@@ -1,7 +1,8 @@
 const fs = require('fs'),
       path = require('path'),
       router = require('express').Router(),
-      media = path.join(__dirname, "..", "media");
+      media = path.join(__dirname, "..", "media"),
+      ext = /\.mp3$|\.mp4a$|\.mpc$|\.ogg$/;
 
 router.get('/artists', (req, res) => {
   var arts = {};
@@ -32,18 +33,29 @@ router.get('/artists/:path/:artist', (req, res) => {
     if (fs.statSync(albDir).isFile())
       return;  // problem serving mp3 archives
 
-    tracks[alb] = fs.readdirSync(albDir).map((track) => {
-      return {
-        name: track,
-        path: path.join(artPath, alb, track)
-      };
-    });
+    tracks[alb] = fs.readdirSync(albDir)
+      .filter(file => ext.test(file))
+      .map((track) => {
+        return {
+          name: track,
+          path: path.join(artPath, alb, track)
+        };
+      });
   });
 
   res.json(tracks);
 });
 
-router.get('/', (req, res) => {
+router.get('/last', (req, res) => {
+  try {
+    res.json(fs.readFileSync(`${media}/last`, 'utf8').split(/\n/));
+  }
+  catch(e) {
+    return [];
+  }
+});
+
+router.get('*', (req, res) => {
   res.status(404).end();
 });
 

@@ -1,12 +1,14 @@
 const express = require('express'),
       path = require('path'),
       http = require('http'),
+      cors = require('cors'),
       fs = require('fs'),
       api = require('./api'),
       port = process.env.PORT || '1926',
       app = express();
 
 app.use(express.static(path.join(__dirname, '../dist')));
+app.use(cors());
 app.use('/api', api);
 app.get('/media', function(req,res){
   var filePath = req.query.path,

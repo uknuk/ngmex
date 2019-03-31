@@ -1,0 +1,18 @@
+<mat-tab-group>
+    <mat-tab label="Player">
+      <h3>
+        {{track}}
+      </h3>
+      <audio id="player" controls>
+      </audio>
+    </mat-tab>
+    <mat-tab label="Artists">
+      <div fxLayout="grid wrap" fxLayoutAlign="start">
+        <div *ngFor="let art of artNames">
+          <button mat-raised-button color="accent">
+            {{art}}
+          </button>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
