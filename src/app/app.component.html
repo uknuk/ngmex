@@ -5,11 +5,25 @@
       </h3>
       <audio id="player" controls>
       </audio>
+      <div fxLayout="grid wrap" fxLayoutAlign="start">
+          <div *ngFor="let alb of selAlbs">
+              <button mat-raised-button (click)="selectAlbum($event, alb)" color="accent">
+                {{alb}}
+              </button>
+          </div>
+      </div>
+      <div fxLayout="grid wrap" fxLayoutAlign="start">
+          <div *ngFor="let track of tracks">
+              <button mat-raised-button (click)="play($event, tracks.indexOf(track))" color="primary">
+                {{track.name}}
+              </button>
+          </div>
+      </div>
     </mat-tab>
     <mat-tab label="Artists">
       <div fxLayout="grid wrap" fxLayoutAlign="start">
         <div *ngFor="let art of artNames">
-          <button mat-raised-button color="accent">
+          <button mat-raised-button (click)="selectArtist($event, art)" color="accent">
             {{art}}
           </button>
         </div>

@@ -3,8 +3,14 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { environment } from '../environments/environment';
 import 'rxjs/add/operator/catch'
 
-let path = `${environment.baseUrl}/api`;
+const path = `${environment.baseUrl}/api`;
 
+
+
+export interface Track {
+  name: string;
+  path: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +28,7 @@ export class ApiService {
   }
 
   getTracks(artist: string, dir: string) {
-    return this.http.get(`${path}/${dir}/${artist}`);
+    return this.http.get(`${path}/artists/${dir}/${artist}`);
   }
 
   getLast() {
