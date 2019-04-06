@@ -37,7 +37,7 @@ router.get('/artists/:path/:artist', (req, res) => {
       .filter(file => ext.test(file))
       .map((track) => {
         return {
-          name: track,
+          name: path.basename(track, path.extname(track)),
           path: path.join(artPath, alb, track)
         };
       });

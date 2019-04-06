@@ -31,7 +31,7 @@ export class AppComponent {
     this.player = <HTMLAudioElement> document.getElementById('player');
     this.player.onended = () => this.next();
     this.arts = await this.api.getArtists().toPromise();
-    this.artNames = Object.keys(this.arts);
+    this.artNames = Object.keys(this.arts).sort();
     const last = JSON.parse(localStorage.getItem("last"))
     if (last && last.art) {
       await this.selectArtist(null, last.art);
