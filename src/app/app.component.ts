@@ -13,13 +13,14 @@ export class AppComponent {
   tab: number;
   api: ApiService;
   arts: Object;
-  artNames: Array<string>;
+  artNames: string[];
   art: string;
   selArt: string;
   selTracks: object;
-  selAlbs: Array<string>;
+  selAlbs: string[];
+  albs: string[];
   alb: string;
-  tracks: Array<Track>;
+  tracks: Track[];
   track: string;
   trackNum: number;
 
@@ -48,6 +49,7 @@ export class AppComponent {
   }
 
   selectAlbum(event: any, alb: string, num: number = 0) {
+    this.albs = this.selAlbs;
     this.alb = alb;
     this.art = this.selArt;
     this.tracks = this.selTracks[alb];
@@ -80,5 +82,11 @@ export class AppComponent {
   setTab($event) {
     if ($event != this.tab)
       this.tab = $event;
+      if ($event === 0)
+        this.player.play().catch();
+  }
+
+  cancelSelection($event) {
+    this.selArt = this.art;
   }
 }

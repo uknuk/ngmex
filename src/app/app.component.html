@@ -1,36 +1,52 @@
-<mat-tab-group [selectedIndex] = "tab" (selectedIndexChange)="setTab($event)">
-    <mat-tab label="Player">
-      <div>
-          <span class="art">{{art}} </span>
-          <span class="alb">{{alb}} </span>
-          <span class="track">{{track}} </span>
-      </div>
-      <audio id="player" controls>
-      </audio>
-      <hr>
-      <div fxLayout="grid wrap" fxLayoutAlign="start">
-          <div *ngFor="let alb of selAlbs">
-              <button mat-raised-button (click)="selectAlbum($event, alb)" color="accent">
+<mat-tab-group [selectedIndex]="tab" (selectedIndexChange)="setTab($event)">
+  <mat-tab label="Player">
+    <div>
+      <span class="art">{{art}} </span>
+      <span class="alb">{{alb}} </span>
+      <span class="track">{{track}} </span>
+    </div>
+    <audio id="player" controls>
+    </audio>
+    <hr>
+
+    <div *ngIf="selArt != art">
+        <div fxLayout="grid wrap" fxLayoutAlign="start">
+            <button mat-raised-button (click)="cancelSelection($event)" color="warn">
+            {{"Cancel " + selArt + ": "}}
+            </button>
+            <div *ngFor="let alb of selAlbs">
+              <button mat-raised-button (click)="selectAlbum($event, alb)" color="warn">
                 {{alb}}
               </button>
+            </div>
           </div>
+          <hr>
+    </div>
+
+    <div fxLayout="grid wrap" fxLayoutAlign="start">
+      <div *ngFor="let alb of albs">
+        <button mat-raised-button (click)="selectAlbum($event, alb)" color="accent">
+          {{alb}}
+        </button>
       </div>
-      <hr>
-      <div *ngIf="this.tracks" fxLayout="grid wrap" fxLayoutAlign="start">
-          <div *ngFor="let track of tracks">
-              <button mat-raised-button (click)="play($event, tracks.indexOf(track))" color="primary">
-                {{track.name}}
-              </button>
-          </div>
+    </div>
+
+    <hr>
+    <div *ngIf="this.tracks" fxLayout="grid wrap" fxLayoutAlign="start">
+      <div *ngFor="let track of tracks">
+        <button mat-raised-button (click)="play($event, tracks.indexOf(track))" color="primary">
+          {{track.name}}
+        </button>
       </div>
-    </mat-tab>
-    <mat-tab label="Artists">
-      <div fxLayout="grid wrap" fxLayoutAlign="start">
-        <div *ngFor="let art of artNames">
-          <button mat-raised-button (click)="selectArtist($event, art)" color="accent">
-            {{art}}
-          </button>
-        </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Artists">
+    <div fxLayout="grid wrap" fxLayoutAlign="start">
+      <div *ngFor="let art of artNames">
+        <button mat-raised-button (click)="selectArtist($event, art)" color="accent">
+          {{art}}
+        </button>
       </div>
-    </mat-tab>
-  </mat-tab-group>
+    </div>
+  </mat-tab>
+</mat-tab-group>
