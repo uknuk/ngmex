@@ -25,33 +25,33 @@ export class AppComponent {
 
   constructor(api: ApiService) {
     this.api = api;
-    api.getArtists().subscribe(arts => {
-      this.arts = arts
-      this.artNames = Object.keys(arts);
-    });
-    this.tab = 0;
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     this.player = <HTMLAudioElement> document.getElementById('player');
     this.player.onended = () => this.next();
+    this.arts = await this.api.getArtists().toPromise();
+    this.artNames = Object.keys(this.arts);
+    const last = JSON.parse(localStorage.getItem("last"))
+    if (last && last.art) {
+      await this.selectArtist(null, last.art);
+      if (last.alb)
+        this.selectAlbum(null, last.alb, last.num)
+    }
   }
 
-  selectArtist(event: any, art: string) {
+  async selectArtist(event: any, art: string) {
     this.selArt = art;
-    this.api.getTracks(art, this.arts[art]).subscribe(tracks => {
-      this.selTracks = tracks;
-      this.selAlbs = Object.keys(tracks);
-    });
+    this.selTracks = await this.api.getTracks(art, this.arts[art]).toPromise();
+    this.selAlbs = Object.keys(this.selTracks);
     this.tab = 0;
   }
 
-  selectAlbum(event: any, alb: string) {
+  selectAlbum(event: any, alb: string, num: number = 0) {
     this.alb = alb;
     this.art = this.selArt;
     this.tracks = this.selTracks[alb];
-
-    this.play(null, 0);
+    this.play(null, num);
   }
 
   play(event: any, num: number) {
@@ -60,12 +60,21 @@ export class AppComponent {
     this.track = track.name;
     this.player.src = `${environment.baseUrl}/media?path=${track.path}`;
     this.player.play().catch();
+    this.save()
   }
 
   next() {
     let num = this.trackNum + 1;
     if (num < this.tracks.length)
       this.play(null, num);
+  }
+
+  save() {
+    localStorage.setItem("last", JSON.stringify({
+      art: this.art,
+      alb: this.alb,
+      num: this.trackNum
+    }))
   }
 
   setTab($event) {

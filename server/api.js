@@ -27,7 +27,7 @@ router.get('/artists/:path/:artist', (req, res) => {
 
   var tracks = {}
 
-  fs.readdirSync(dir).forEach((alb) => {
+  loadAlbums(dir).forEach((alb) => {
     let albDir = path.join(dir, alb);
 
     if (fs.statSync(albDir).isFile())
@@ -58,5 +58,40 @@ router.get('/last', (req, res) => {
 router.get('*', (req, res) => {
   res.status(404).end();
 });
+
+function loadAlbums(dir) {
+  const issued = function(alb) {
+    var re = /^\d{2}[\s+|_|-]/;
+    if (alb.substr(0,2) == 'M0')
+      return alb.replace('M0', '200');
+
+    var year = alb.match(re);
+    return year ? year[0].substr(0,2) < 30 ? '20' + alb : '19' + alb : alb;
+  }
+
+  return fs.readdirSync(dir).sort((a, b) => {
+
+    if (a.substr(0,2) == 'Op' && b.substr(0,2) == 'Op') {
+      let re = /^\d{2,3}/,
+          oa = a.replace(/^Op/,'').match(re),
+          ob = b.replace(/^Op/,'').match(re);
+
+      if (oa && ob)
+        return oa -ob;
+    }
+
+    let re = /^\d{4}/,
+        ia = issued(a),
+        ib = issued(b),
+        ya = ia.match(re),
+        yb = ib.match(re);
+
+
+    if (ya && yb)
+      return ya - yb;
+
+    return ia === ib ? 0 : ia > ib ? 1 : -1;
+  });
+}
 
 module.exports = router;

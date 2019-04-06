@@ -1,10 +1,13 @@
 <mat-tab-group [selectedIndex] = "tab" (selectedIndexChange)="setTab($event)">
     <mat-tab label="Player">
-      <h3>
-        {{track}}
-      </h3>
+      <div>
+          <span class="art">{{art}} </span>
+          <span class="alb">{{alb}} </span>
+          <span class="track">{{track}} </span>
+      </div>
       <audio id="player" controls>
       </audio>
+      <hr>
       <div fxLayout="grid wrap" fxLayoutAlign="start">
           <div *ngFor="let alb of selAlbs">
               <button mat-raised-button (click)="selectAlbum($event, alb)" color="accent">
@@ -12,7 +15,8 @@
               </button>
           </div>
       </div>
-      <div fxLayout="grid wrap" fxLayoutAlign="start">
+      <hr>
+      <div *ngIf="this.tracks" fxLayout="grid wrap" fxLayoutAlign="start">
           <div *ngFor="let track of tracks">
               <button mat-raised-button (click)="play($event, tracks.indexOf(track))" color="primary">
                 {{track.name}}

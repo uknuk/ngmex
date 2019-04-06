@@ -5,3 +5,11 @@ audio {
     height: 40px;
     width: 80%;
 }
+
+.art, .track {
+    color: blue;
+}
+
+.alb {
+    color: green;
+}
