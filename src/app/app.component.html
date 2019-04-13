@@ -1,9 +1,9 @@
 <mat-tab-group [selectedIndex]="tab" (selectedIndexChange)="setTab($event)">
   <mat-tab label="Player">
     <div>
-      <span class="art">{{art}} </span>
-      <span class="alb">{{alb}} </span>
-      <span class="track">{{track}} </span>
+      <span class="art large">{{art}} </span>
+      <span class="alb large">{{alb}} </span>
+      <span class="track large">{{track}} </span>
     </div>
     <audio id="player" controls>
     </audio>
@@ -15,7 +15,7 @@
             {{"Cancel " + selArt + ": "}}
             </button>
             <div *ngFor="let alb of selAlbs">
-              <button mat-raised-button (click)="selectAlbum($event, alb)" color="warn">
+              <button mat-raised-button (click)="selectAlbum($event, alb)" color="accent">
                 {{alb}}
               </button>
             </div>
@@ -24,22 +24,23 @@
     </div>
 
     <div fxLayout="grid wrap" fxLayoutAlign="start">
-      <div *ngFor="let alb of albs">
-        <button mat-raised-button (click)="selectAlbum($event, alb)" color="accent">
-          {{alb}}
+      <div *ngFor="let album of albs">
+        <button mat-raised-button (click)="selectAlbum($event, album)" [color]="album == this.alb ? 'warn' : 'accent'">
+          {{album}}
         </button>
       </div>
     </div>
 
     <hr>
     <div *ngIf="this.tracks" fxLayout="grid wrap" fxLayoutAlign="start">
-      <div *ngFor="let track of tracks">
-        <button mat-raised-button (click)="play($event, tracks.indexOf(track))" color="primary">
-          {{track.name}}
+      <div *ngFor="let tr of tracks">
+        <button mat-raised-button (click)="play($event, tracks.indexOf(tr))" [color]="tr.name == track ? 'warn' : 'primary'">
+          {{tr.name}}
         </button>
       </div>
     </div>
   </mat-tab>
+
   <mat-tab label="Artists">
     <div fxLayout="grid wrap" fxLayoutAlign="start">
       <div *ngFor="let art of artNames">

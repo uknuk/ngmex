@@ -13,3 +13,7 @@ audio {
 .alb {
     color: green;
 }
+
+.large {
+    font-size: 3vw;
+}

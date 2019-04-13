@@ -69,6 +69,11 @@ export class AppComponent {
     let num = this.trackNum + 1;
     if (num < this.tracks.length)
       this.play(null, num);
+    else {
+      let nextAlbNum = this.albs.indexOf(this.alb) + 1;
+      if (nextAlbNum < this.albs.length)
+        this.selectAlbum(null, this.albs[nextAlbNum]);
+    }
   }
 
   save() {
