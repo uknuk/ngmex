@@ -13,12 +13,14 @@ app.use(favicon(path.join(__dirname, '../public/speaker.ico')));
 app.use(cors());
 app.use('/api', api);
 app.get('/media', function(req,res){
-  var filePath = req.query.path,
-      file = path.join(__dirname, "../media", filePath);
+  let filePath = req.query.path,
+      file = path.join(__dirname, "../media", filePath),
+      stat = fs.statSync(file);
 
   fs.exists(file, function(exists){
     if(exists)
     {
+      res.set('Content-Length', stat.size);
       var rstream = fs.createReadStream(file);
       rstream.pipe(res);
     }

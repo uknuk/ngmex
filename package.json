@@ -6,8 +6,9 @@
   "scripts": {
     "ng": "ng",
     "start": "supervisor -w server server/start.js",
-    "electron": "ng build --base-href ./ && electron .",
+    "start:electron": "ng build --base-href ./ && electron .",
     "build": "ng build --prod",
+    "build:electron": "ng build --prod --base-href ./",
     "test": "ng serve --proxy-config proxy.conf.json",
     "lint": "ng lint",
     "e2e": "ng e2e"

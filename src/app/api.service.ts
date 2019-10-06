@@ -5,8 +5,6 @@ import 'rxjs/add/operator/catch'
 
 const path = `${environment.baseUrl}/api`;
 
-
-
 export interface Track {
   name: string;
   path: string;

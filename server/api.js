@@ -46,6 +46,7 @@ router.get('/artists/:path/:artist', (req, res) => {
   res.json(tracks);
 });
 
+
 router.get('/last', (req, res) => {
   try {
     res.json(fs.readFileSync(`${media}/last`, 'utf8').split(/\n/));

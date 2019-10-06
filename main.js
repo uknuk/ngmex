@@ -1,15 +1,15 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, powerSaveBlocker} = require('electron')
 const path = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let mainWindow;
 
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 1024,
-    height: 1024,
+    height: 612,
     webPreferences: {
       nodeIntegration: true
     }
@@ -28,6 +28,8 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
+  powerSaveBlocker.start("prevent-app-suspension");
 }
 
 // This method will be called when Electron has finished

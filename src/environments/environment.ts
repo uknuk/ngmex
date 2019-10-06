@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://flora:1926'
+  baseUrl: 'http://localhost:1926'
 };

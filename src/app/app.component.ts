@@ -31,6 +31,7 @@ export class AppComponent {
   async ngAfterViewInit() {
     this.player = <HTMLAudioElement> document.getElementById('player');
     this.player.onended = () => this.next();
+
     this.arts = await this.api.getArtists().toPromise();
     this.artNames = Object.keys(this.arts).sort();
     const last = JSON.parse(localStorage.getItem("last"))
@@ -56,7 +57,7 @@ export class AppComponent {
     this.play(null, num);
   }
 
-  play(event: any, num: number) {
+  async play(event: any, num: number) {
     this.trackNum = num;
     const track = this.tracks[num];
     this.track = track.name;
