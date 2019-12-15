@@ -25,7 +25,7 @@
 
     <div fxLayout="grid wrap" fxLayoutAlign="start">
       <div *ngFor="let album of albs">
-        <button mat-raised-button (click)="selectAlbum($event, album)" [color]="album == this.alb ? 'warn' : 'accent'">
+        <button mat-raised-button (click)="selectAlbum($event, album, true)" [color]="album == this.alb ? 'warn' : 'accent'">
           {{album}}
         </button>
       </div>
@@ -34,7 +34,7 @@
     <hr>
     <div *ngIf="this.tracks" fxLayout="grid wrap" fxLayoutAlign="start">
       <div *ngFor="let tr of tracks">
-        <button mat-raised-button (click)="play($event, tracks.indexOf(tr))" [color]="tr.name == track ? 'warn' : 'primary'">
+        <button mat-raised-button (click)="selectTrack($event, tracks.indexOf(tr))" [color]="tr.name == track ? 'warn' : 'primary'">
           {{tr.name}}
         </button>
       </div>
