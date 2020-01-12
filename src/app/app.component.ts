@@ -57,7 +57,7 @@ export class AppComponent {
     this.selectTrack(null, num, play);
   }
 
-  async selectTrack(event: any, num: number, play: boolean = false) {
+  async selectTrack(event: any, num: number, play: boolean = true) {
     this.trackNum = num;
     const track = this.tracks[num];
     this.track = track.name;
@@ -76,7 +76,9 @@ export class AppComponent {
     else {
       let nextAlbNum = this.albs.indexOf(this.alb) + 1;
       if (nextAlbNum < this.albs.length)
-        this.selectAlbum(null, this.albs[nextAlbNum], false);
+        this.selectAlbum(null, this.albs[nextAlbNum], true);
+      else
+        return;
     }
     window.location.reload()
     // needed because the view is not refreshed under electron
